@@ -51,7 +51,7 @@ Then register a Power-Up with your local URL (e.g. `https://localhost:3000/`).
 ## Usage
 
 1. Open any card on your board
-2. Click the **Importance / Urgency** button in the Power-Ups section
+2. Click the **Eisenhower Matrix** button in the Power-Ups section
 3. Select **Importance** (High or Low)
 4. Select **Urgency** (High or Low)
 5. Click **Save**

@@ -32,10 +32,10 @@
       'card-buttons': function(t, options) {
         return [{
           icon: ICON_URL,
-          text: 'Importance / Urgency',
+          text: 'Eisenhower Matrix',
           callback: function(t) {
             return t.popup({
-              title: 'Importance / Urgency',
+              title: 'Eisenhower Matrix',
               url: POPUP_URL,
               height: 184
             });
@@ -69,7 +69,7 @@
                 text: data.importance === 'high' ? 'High' : 'Low',
                 callback: function(t) {
                   return t.popup({
-                    title: 'Importance / Urgency',
+                    title: 'Eisenhower Matrix',
                     url: POPUP_URL,
                     height: 184
                   });
@@ -80,7 +80,7 @@
                 text: data.urgency === 'high' ? 'High' : 'Low',
                 callback: function(t) {
                   return t.popup({
-                    title: 'Importance / Urgency',
+                    title: 'Eisenhower Matrix',
                     url: POPUP_URL,
                     height: 184
                   });

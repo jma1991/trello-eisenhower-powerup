@@ -23,7 +23,7 @@ The active Power-Up connector is `index.html`. It registers capabilities inline 
 ## Trello Power-Up Capabilities
 
 The three registered capabilities in `index.html`:
-- `card-buttons` — adds the "Importance / Urgency" button that opens `popup.html` as a popup
+- `card-buttons` — adds the "Eisenhower Matrix" button that opens `popup.html` as a popup
 - `card-badges` — renders a colored quadrant badge on card fronts
 - `card-detail-badges` — renders Importance, Urgency, and Quadrant badges on card backs (each badge with a callback to re-open the popup)
 
