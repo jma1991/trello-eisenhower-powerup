@@ -9,19 +9,19 @@
   <div class="eisenhower-container">
     <div class="selector-row">
       <div class="selector-group">
-        <label for="importance">Importance</label>
+        <label for="importance">Important</label>
         <select id="importance">
           <option value="">Select...</option>
-          <option value="high">High</option>
-          <option value="low">Low</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select>
       </div>
       <div class="selector-group">
-        <label for="urgency">Urgency</label>
+        <label for="urgency">Urgent</label>
         <select id="urgency">
           <option value="">Select...</option>
-          <option value="high">High</option>
-          <option value="low">Low</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select>
       </div>
     </div>
@@ -55,10 +55,10 @@
     };
 
     function getQuadrant(importance, urgency) {
-      if (importance === 'high' && urgency === 'high') return QUADRANTS.doIt;
-      if (importance === 'high' && urgency === 'low') return QUADRANTS.scheduleIt;
-      if (importance === 'low' && urgency === 'high') return QUADRANTS.delegateIt;
-      if (importance === 'low' && urgency === 'low') return QUADRANTS.dontDoIt;
+      if (importance === 'yes' && urgency === 'yes') return QUADRANTS.doIt;
+      if (importance === 'yes' && urgency === 'no') return QUADRANTS.scheduleIt;
+      if (importance === 'no' && urgency === 'yes') return QUADRANTS.delegateIt;
+      if (importance === 'no' && urgency === 'no') return QUADRANTS.dontDoIt;
       return null;
     }
 

@@ -15,10 +15,10 @@ Learn more: [Eisenhower Matrix on Untools](https://untools.co/eisenhower-matrix/
 
 ## Features
 
-- **Card Button** – Set Importance (High/Low) and Urgency (High/Low) for any card
+- **Card Button** – Set Important (Yes/No) and Urgent (Yes/No) for any card
 - **Quadrant Preview** – See the resulting quadrant before saving
 - **Card Badges** – Color-coded quadrant displayed on card front
-- **Detail Badges** – Importance, Urgency, and Quadrant shown on card back
+- **Detail Badges** – Important, Urgent, and Quadrant shown on card back
 
 ## Installation
 
@@ -52,8 +52,8 @@ Then register a Power-Up with your local URL (e.g. `https://localhost:3000/`).
 
 1. Open any card on your board
 2. Click the **Eisenhower Matrix** button in the Power-Ups section
-3. Select **Importance** (High or Low)
-4. Select **Urgency** (High or Low)
+3. Select **Important** (Yes or No)
+4. Select **Urgent** (Yes or No)
 5. Click **Save**
 
 The card will display a colored badge indicating its quadrant:

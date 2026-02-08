@@ -27,10 +27,10 @@ const QUADRANTS = {
 
 // Determine quadrant based on importance and urgency
 function getQuadrant(importance, urgency) {
-  if (importance === 'high' && urgency === 'high') return QUADRANTS.doIt;
-  if (importance === 'high' && urgency === 'low') return QUADRANTS.scheduleIt;
-  if (importance === 'low' && urgency === 'high') return QUADRANTS.delegateIt;
-  if (importance === 'low' && urgency === 'low') return QUADRANTS.dontDoIt;
+  if (importance === 'yes' && urgency === 'yes') return QUADRANTS.doIt;
+  if (importance === 'yes' && urgency === 'no') return QUADRANTS.scheduleIt;
+  if (importance === 'no' && urgency === 'yes') return QUADRANTS.delegateIt;
+  if (importance === 'no' && urgency === 'no') return QUADRANTS.dontDoIt;
   return null;
 }
 
