@@ -45,10 +45,12 @@
     .quadrant-result.red { background: #eb5a46; color: white; }
     .quadrant-result.empty { background: #f4f5f7; color: #5e6c84; }
     .button-row {
+      display: flex;
+      gap: 8px;
       padding: 0 8px 8px 8px;
     }
-    button {
-      width: 100%;
+    .button-row button {
+      flex: 1;
     }
   </style>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
@@ -76,6 +78,7 @@
     <div id="quadrant-result" class="quadrant-result empty">Select values above</div>
     <div class="button-row">
       <button type="submit" class="mod-primary">Save</button>
+      <button type="button" id="clear-btn" class="mod-danger">Clear</button>
     </div>
   </form>
 
@@ -140,15 +143,6 @@
       var importance = document.getElementById('importance').value;
       var urgency = document.getElementById('urgency').value;
 
-      // Both empty — clear stored data
-      if (!importance && !urgency) {
-        return t.remove('card', 'shared', 'eisenhowerMatrix')
-          .then(function() {
-            t.closePopup();
-          });
-      }
-
-      // One empty — incomplete selection, do nothing
       if (!importance || !urgency) {
         return;
       }
@@ -160,6 +154,14 @@
       .then(function() {
         t.closePopup();
       });
+    });
+
+    // Clear button handler
+    document.getElementById('clear-btn').addEventListener('click', function() {
+      t.remove('card', 'shared', 'eisenhowerMatrix')
+        .then(function() {
+          t.closePopup();
+        });
     });
 
     // Resize to fit content
