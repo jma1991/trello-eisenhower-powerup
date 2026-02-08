@@ -140,6 +140,15 @@
       var importance = document.getElementById('importance').value;
       var urgency = document.getElementById('urgency').value;
 
+      // Both empty — clear stored data
+      if (!importance && !urgency) {
+        return t.remove('card', 'shared', 'eisenhowerMatrix')
+          .then(function() {
+            t.closePopup();
+          });
+      }
+
+      // One empty — incomplete selection, do nothing
       if (!importance || !urgency) {
         return;
       }
