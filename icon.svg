@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- 2x2 Eisenhower Matrix grid -->
+  <!-- Top-left: Do It (green) -->
+  <rect x="1" y="1" width="10" height="10" rx="1" fill="#61bd4f"/>
+  <!-- Top-right: Schedule It (blue) -->
+  <rect x="13" y="1" width="10" height="10" rx="1" fill="#0079bf"/>
+  <!-- Bottom-left: Delegate It (yellow) -->
+  <rect x="1" y="13" width="10" height="10" rx="1" fill="#f2d600"/>
+  <!-- Bottom-right: Don't Do It (red) -->
+  <rect x="13" y="13" width="10" height="10" rx="1" fill="#eb5a46"/>
+</svg>

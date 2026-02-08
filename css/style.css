@@ -1,0 +1,99 @@
+/* Eisenhower Matrix Power-Up Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  color: #172b4d;
+  background: transparent;
+}
+
+.eisenhower-container {
+  padding: 8px;
+}
+
+.selector-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.selector-group {
+  flex: 1;
+}
+
+.selector-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5e6c84;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.selector-group select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #dfe1e6;
+  border-radius: 3px;
+  background-color: #fafbfc;
+  color: #172b4d;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.selector-group select:hover {
+  background-color: #ebecf0;
+}
+
+.selector-group select:focus {
+  outline: none;
+  border-color: #0079bf;
+  background-color: #fff;
+}
+
+.quadrant-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 3px;
+  background-color: #f4f5f7;
+  min-height: 40px;
+}
+
+.quadrant-result.green {
+  background-color: #e4f7e4;
+  border-left: 4px solid #61bd4f;
+}
+
+.quadrant-result.blue {
+  background-color: #e4f0f7;
+  border-left: 4px solid #0079bf;
+}
+
+.quadrant-result.yellow {
+  background-color: #fdf4e3;
+  border-left: 4px solid #f2d600;
+}
+
+.quadrant-result.red {
+  background-color: #f7e4e4;
+  border-left: 4px solid #eb5a46;
+}
+
+.quadrant-icon {
+  font-size: 16px;
+}
+
+.quadrant-name {
+  font-weight: 600;
+  color: #172b4d;
+}

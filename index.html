@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Eisenhower Matrix Power-Up</h1>
+  <p>This is the connector page for the Power-Up.</p>
+
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script>
+    var POPUP_URL = './popup.html';
+    var ICON_URL = './icon.svg';
+
+    // Quadrant definitions
+    var QUADRANTS = {
+      doIt: { name: 'Do It', color: 'green' },
+      scheduleIt: { name: 'Schedule It', color: 'blue' },
+      delegateIt: { name: 'Delegate It', color: 'yellow' },
+      dontDoIt: { name: "Don't Do It", color: 'red' }
+    };
+
+    function getQuadrant(importance, urgency) {
+      if (importance === 'high' && urgency === 'high') return QUADRANTS.doIt;
+      if (importance === 'high' && urgency === 'low') return QUADRANTS.scheduleIt;
+      if (importance === 'low' && urgency === 'high') return QUADRANTS.delegateIt;
+      if (importance === 'low' && urgency === 'low') return QUADRANTS.dontDoIt;
+      return null;
+    }
+
+    TrelloPowerUp.initialize({
+      'card-buttons': function(t, options) {
+        return [{
+          icon: ICON_URL,
+          text: 'Importance / Urgency',
+          callback: function(t) {
+            return t.popup({
+              title: 'Importance / Urgency',
+              url: POPUP_URL,
+              height: 184
+            });
+          }
+        }];
+      },
+      'card-badges': function(t, options) {
+        return t.get('card', 'shared', 'eisenhowerMatrix')
+          .then(function(data) {
+            if (!data || !data.importance || !data.urgency) {
+              return [];
+            }
+            var quadrant = getQuadrant(data.importance, data.urgency);
+            if (!quadrant) return [];
+            return [{
+              text: quadrant.name,
+              color: quadrant.color
+            }];
+          });
+      },
+      'card-detail-badges': function(t, options) {
+        return t.get('card', 'shared', 'eisenhowerMatrix')
+          .then(function(data) {
+            if (!data || !data.importance || !data.urgency) {
+              return [];
+            }
+            var quadrant = getQuadrant(data.importance, data.urgency);
+            return [
+              {
+                title: 'Importance',
+                text: data.importance === 'high' ? 'High' : 'Low',
+                callback: function(t) {
+                  return t.popup({
+                    title: 'Importance / Urgency',
+                    url: POPUP_URL,
+                    height: 184
+                  });
+                }
+              },
+              {
+                title: 'Urgency',
+                text: data.urgency === 'high' ? 'High' : 'Low',
+                callback: function(t) {
+                  return t.popup({
+                    title: 'Importance / Urgency',
+                    url: POPUP_URL,
+                    height: 184
+                  });
+                }
+              },
+              {
+                title: 'Quadrant',
+                text: quadrant ? quadrant.name : '-',
+                color: quadrant ? quadrant.color : null
+              }
+            ];
+          });
+      }
+    });
+  </script>
+</body>
+</html>

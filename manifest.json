@@ -1,0 +1,16 @@
+{
+  "name": "Eisenhower Matrix",
+  "details": "Prioritize cards using the Eisenhower Matrix framework. Categorize tasks into Do It, Schedule It, Delegate It, or Don't Do It based on their importance and urgency levels.",
+  "icon": {
+    "url": "https://jma1991.github.io/trello-eisenhower-powerup/icon.svg"
+  },
+  "author": "James",
+  "capabilities": [
+    "card-buttons",
+    "card-badges",
+    "card-detail-badges"
+  ],
+  "connectors": {
+    "iframe-connector": "https://jma1991.github.io/trello-eisenhower-powerup/"
+  }
+}

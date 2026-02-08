@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="eisenhower-container">
+    <div class="selector-row">
+      <div class="selector-group">
+        <label for="importance">Importance</label>
+        <select id="importance">
+          <option value="">Select...</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="selector-group">
+        <label for="urgency">Urgency</label>
+        <select id="urgency">
+          <option value="">Select...</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+    </div>
+    <div id="quadrant-result" class="quadrant-result"></div>
+  </div>
+
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script>
+    // Quadrant definitions
+    const QUADRANTS = {
+      doIt: {
+        name: 'Do It',
+        color: 'green',
+        icon: '🟢'
+      },
+      scheduleIt: {
+        name: 'Schedule It',
+        color: 'blue',
+        icon: '🔵'
+      },
+      delegateIt: {
+        name: 'Delegate It',
+        color: 'yellow',
+        icon: '🟡'
+      },
+      dontDoIt: {
+        name: "Don't Do It",
+        color: 'red',
+        icon: '🔴'
+      }
+    };
+
+    function getQuadrant(importance, urgency) {
+      if (importance === 'high' && urgency === 'high') return QUADRANTS.doIt;
+      if (importance === 'high' && urgency === 'low') return QUADRANTS.scheduleIt;
+      if (importance === 'low' && urgency === 'high') return QUADRANTS.delegateIt;
+      if (importance === 'low' && urgency === 'low') return QUADRANTS.dontDoIt;
+      return null;
+    }
+
+    function updateQuadrantDisplay(importance, urgency) {
+      const resultDiv = document.getElementById('quadrant-result');
+
+      if (!importance || !urgency) {
+        resultDiv.innerHTML = '';
+        resultDiv.className = 'quadrant-result';
+        return;
+      }
+
+      const quadrant = getQuadrant(importance, urgency);
+      if (quadrant) {
+        resultDiv.innerHTML = `
+          <span class="quadrant-icon">${quadrant.icon}</span>
+          <span class="quadrant-name">${quadrant.name}</span>
+        `;
+        resultDiv.className = 'quadrant-result ' + quadrant.color;
+      }
+    }
+
+    var t = TrelloPowerUp.iframe();
+
+    // Load saved values
+    t.get('card', 'shared', 'eisenhowerMatrix')
+      .then(function(data) {
+        if (data) {
+          if (data.importance) {
+            document.getElementById('importance').value = data.importance;
+          }
+          if (data.urgency) {
+            document.getElementById('urgency').value = data.urgency;
+          }
+          updateQuadrantDisplay(data.importance, data.urgency);
+        }
+      });
+
+    // Save on change
+    function saveAndUpdate() {
+      var importance = document.getElementById('importance').value;
+      var urgency = document.getElementById('urgency').value;
+
+      t.set('card', 'shared', 'eisenhowerMatrix', {
+        importance: importance,
+        urgency: urgency
+      });
+
+      updateQuadrantDisplay(importance, urgency);
+    }
+
+    document.getElementById('importance').addEventListener('change', saveAndUpdate);
+    document.getElementById('urgency').addEventListener('change', saveAndUpdate);
+
+    // Resize iframe to fit content
+    t.sizeTo('body').catch(function() {});
+  </script>
+</body>
+</html>

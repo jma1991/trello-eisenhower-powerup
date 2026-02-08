@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    form {
+      padding: 0;
+      margin: 0;
+    }
+    .form-row {
+      display: flex;
+      padding: 0 8px;
+      margin-bottom: 8px;
+    }
+    .form-group {
+      flex: 1;
+      padding: 0 4px;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+    select {
+      width: 100%;
+      height: 32px;
+    }
+    .quadrant-result {
+      margin: 0 8px 8px 8px;
+      padding: 8px;
+      border-radius: 3px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .quadrant-result.green { background: #61bd4f; color: white; }
+    .quadrant-result.blue { background: #0079bf; color: white; }
+    .quadrant-result.yellow { background: #f2d600; color: #172b4d; }
+    .quadrant-result.red { background: #eb5a46; color: white; }
+    .quadrant-result.empty { background: #f4f5f7; color: #5e6c84; }
+    .button-row {
+      padding: 0 8px 8px 8px;
+    }
+    button {
+      width: 100%;
+    }
+  </style>
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+</head>
+<body>
+  <form id="eisenhower-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="importance">Importance:</label>
+        <select name="importance" id="importance">
+          <option value="">Select...</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="urgency">Urgency:</label>
+        <select name="urgency" id="urgency">
+          <option value="">Select...</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+    </div>
+    <div id="quadrant-result" class="quadrant-result empty">Select values above</div>
+    <div class="button-row">
+      <button type="submit" class="mod-primary">Save</button>
+    </div>
+  </form>
+
+  <script>
+    var t = TrelloPowerUp.iframe();
+
+    var QUADRANTS = {
+      doIt: { name: 'Do It', color: 'green' },
+      scheduleIt: { name: 'Schedule It', color: 'blue' },
+      delegateIt: { name: 'Delegate It', color: 'yellow' },
+      dontDoIt: { name: "Don't Do It", color: 'red' }
+    };
+
+    function getQuadrant(importance, urgency) {
+      if (importance === 'high' && urgency === 'high') return QUADRANTS.doIt;
+      if (importance === 'high' && urgency === 'low') return QUADRANTS.scheduleIt;
+      if (importance === 'low' && urgency === 'high') return QUADRANTS.delegateIt;
+      if (importance === 'low' && urgency === 'low') return QUADRANTS.dontDoIt;
+      return null;
+    }
+
+    function updateQuadrantDisplay() {
+      var importance = document.getElementById('importance').value;
+      var urgency = document.getElementById('urgency').value;
+      var resultDiv = document.getElementById('quadrant-result');
+
+      if (!importance || !urgency) {
+        resultDiv.textContent = 'Select values above';
+        resultDiv.className = 'quadrant-result empty';
+        return;
+      }
+
+      var quadrant = getQuadrant(importance, urgency);
+      if (quadrant) {
+        resultDiv.textContent = quadrant.name;
+        resultDiv.className = 'quadrant-result ' + quadrant.color;
+      }
+    }
+
+    // Load saved values
+    t.get('card', 'shared', 'eisenhowerMatrix')
+      .then(function(data) {
+        if (data) {
+          if (data.importance) {
+            document.getElementById('importance').value = data.importance;
+          }
+          if (data.urgency) {
+            document.getElementById('urgency').value = data.urgency;
+          }
+          updateQuadrantDisplay();
+        }
+      });
+
+    // Update display on change
+    document.getElementById('importance').addEventListener('change', updateQuadrantDisplay);
+    document.getElementById('urgency').addEventListener('change', updateQuadrantDisplay);
+
+    // Save on form submit
+    document.getElementById('eisenhower-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var importance = document.getElementById('importance').value;
+      var urgency = document.getElementById('urgency').value;
+
+      if (!importance || !urgency) {
+        return;
+      }
+
+      t.set('card', 'shared', 'eisenhowerMatrix', {
+        importance: importance,
+        urgency: urgency
+      })
+      .then(function() {
+        t.closePopup();
+      });
+    });
+
+    // Resize to fit content
+    t.sizeTo('#eisenhower-form').catch(function() {});
+  </script>
+</body>
+</html>
