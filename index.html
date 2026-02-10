@@ -93,6 +93,38 @@
               }
             ];
           });
+      },
+      'list-sorters': function(t) {
+        return [{
+          text: 'Eisenhower Quadrant',
+          callback: function(t, opts) {
+            var cards = opts.cards;
+            return Promise.all(cards.map(function(card) {
+              return t.get(card.id, 'shared', 'eisenhowerMatrix')
+                .then(function(data) {
+                  return { id: card.id, data: data };
+                });
+            })).then(function(results) {
+              var WEIGHTS = {
+                'yes-yes': 1,  // Do It
+                'yes-no': 2,   // Schedule It
+                'no-yes': 3,   // Delegate It
+                'no-no': 4     // Don't Do It
+              };
+              function getWeight(data) {
+                if (!data || !data.importance || !data.urgency) return 5;
+                var key = data.importance + '-' + data.urgency;
+                return WEIGHTS[key] || 5;
+              }
+              results.sort(function(a, b) {
+                return getWeight(a.data) - getWeight(b.data);
+              });
+              return {
+                sortedIds: results.map(function(r) { return r.id; })
+              };
+            });
+          }
+        }];
       }
     });
   </script>

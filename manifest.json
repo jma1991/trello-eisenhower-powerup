@@ -8,7 +8,8 @@
   "capabilities": [
     "card-buttons",
     "card-badges",
-    "card-detail-badges"
+    "card-detail-badges",
+    "list-sorters"
   ],
   "connectors": {
     "iframe-connector": "https://jma1991.github.io/trello-eisenhower-powerup/"
